@@ -79,6 +79,9 @@ const updateUser = (req, res) => {
 };
 const deleteUser = (req, res) => {
     const id = parseInt(req.params.id);
+    if (req.user.id !== id) {
+        res.sendStatus(403);
+    }
     database
         .query("DELETE FROM users WHERE id = ?", [id])
         .then(([result]) => {
